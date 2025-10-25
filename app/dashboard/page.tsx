@@ -1,45 +1,51 @@
-"use client"
+"use client";
+import { useState } from "react";
 import Table from "@/components/Table";
 import Table2 from "@/components/Table2";
 import ModalContainer from "@/components/ui/ModalContainer";
-import { useState } from "react";
-// import { auth, currentUser } from '@clerk/nextjs/server'
-
 
 export default function DashboardPage() {
+  const [activeTab, setActiveTab] = useState("");
 
-  const [activeTable,setActiveTable] = useState('')
-
-  const renderTable=()=>{
-  switch(activeTable){
-    case 'A' : return <Table/>
-    case 'B': return <Table2/>
-    default : return 'Select table'
-  }
-}
-  //   // Get the Backend API User object when you need access to the user's information
-  //const user = await currentUser()
-
-  // Use `auth()` to access `isAuthenticated` - if false, the user is not signed in
-  // const { isAuthenticated } = await auth()
-
-  // Protect the route by checking if the user is signed in
-  // if (!isAuthenticated) {
-  //   return <div>Sign in to view this page</div>
-  // }
   return (
     <>
-      <div className="px-4 sm:px-6 lg:px-8 mt-20">
-        <div className="mt-8 flow-root ">
-          <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
-            <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8 bg-white p-5 ">
-              <button onClick={()=>setActiveTable('A')}>Tabla A</button>
-              <button onClick={()=>setActiveTable('B')}>Tabla B</button>
-            </div>
+      <div className="w-full max-w-6xl mx-auto animate-fade-in">
+        <h2 className="text-4xl md:text-5xl font-bold mb-10 bg-gradient-to-r from-gg-blue to-gg-dark-gold bg-clip-text text-transparent text-center">
+          Sistema de Gestión de Vuelos
+        </h2>
+        <div className="flex justify-center mb-8">
+          <div className="grid w-full max-w-md grid-cols-2 border border-gray-300 bg-gray-50 rounded-xl shadow-sm overflow-hidden">
+            <button
+              onClick={() => setActiveTab("A")}
+              className={`py-3 font-medium transition-colors ${
+                activeTab === "A"
+                  ? "bg-gg-blue text-white"
+                  : "bg-transparent text-gray-700 hover:bg-gray-100"
+              }`}>
+              Tabla A
+            </button>
+            <button
+              onClick={() => setActiveTab("B")}
+              className={`py-3 font-medium transition-colors ${
+                activeTab === "B"
+                  ? "bg-gg-blue text-white"
+                  : "bg-transparent text-gg-gray hover:bg-gray-100"
+              }`}>
+              Tabla B
+            </button>
           </div>
         </div>
+
+        <div className="bg-white rounded-lg shadow p-6 transition-all duration-300 animate-fade-in min-h-[200px]">
+          {activeTab === "A" && <Table />}
+          {activeTab === "B" && <Table2 />}
+          {activeTab === "" && (
+            <div className="flex items-center justify-center text-gray-500 h-full">
+              Select a table
+            </div>
+          )}
+        </div>
       </div>
-      { renderTable()}
 
       <ModalContainer />
     </>
