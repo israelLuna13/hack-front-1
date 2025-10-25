@@ -76,7 +76,7 @@ export default function Table() {
                       {/* <Link href={`/admin/products/${product.id}/edit`} className="text-red-600 hover:text-red-800">Eliminar <span className="sr-only">, {product.name}</span> </Link> */}
                       <button
                 type='button'
-                className='block px-3 py-1 text-sm leading-6 text-red-500'
+                className='block px-3 py-1 text-sm leading-6 text-gg-gold hover:underline'
                 onClick={ () => router.push(`?prevView=true&showModal=true`)}
               >
                 view
