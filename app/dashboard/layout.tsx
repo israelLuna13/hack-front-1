@@ -14,7 +14,7 @@ export default async function AdminLayout({
 
   return (
     <>
-      <header className="bg-black py-5">
+      <header className="bg-white py-5">
         <div className="max-w-5xl mx-auto flex flex-col lg:flex-row justify-between items-center">
           <div className="w-96">
             <Link href={"/admin"}>
@@ -25,7 +25,7 @@ export default async function AdminLayout({
           <AdminMenu />
         </div>
       </header>
-      <section className="max-w-5xl mx-auto mt-20 p-3 py-10">
+      <section className="max-w-5xl mx-auto mt-10 p-3 py-8">
         <ClerkProvider afterSignOutUrl={"/"}>{children}</ClerkProvider>
       </section>
       {/* <ToastNotification /> */}
