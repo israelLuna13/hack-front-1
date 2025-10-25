@@ -9,5 +9,12 @@ export const DataSetAPIResponseSchema = z.object({
 
 })
 
+export const DataSetAPIResponseSchemaF = z.object({
+    day: z.number(),
+    flights: z.number(),
+    passengers: z.number(),
+    max_capacity: z.number()
+})
 
 export type Data = z.infer<typeof DataSetAPIResponseSchema>
+export type DataSet = z.infer<typeof DataSetAPIResponseSchemaF>

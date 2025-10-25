@@ -1,29 +1,21 @@
 "use client"
-import { Data } from '@/src/schemas';
+import {  DataSet } from '@/src/schemas';
 import { useRouter } from 'next/navigation';
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 
 export default function Table() {
+  const [data,setData]=useState<DataSet[]>()
 
-  // useEffect(()=>{
-  //    //fetch
-  //  //const token = getToken()
-  //  // const url = `${process.env.API_URL}/budgets/${params.budgetId}/expenses/${params.expenseId}`
-  //   // const req = await fetch(url,{
-  //   //     headers:{
-  //   //         'Authorization':`Bearer ${token}`
-  //   //     }
-  //   // })
-    
-  //   // const json = await req.json()
-  // })
+  useEffect(()=>{
+    const url = `${process.env.NEXT_PUBLIC_URL}/api/data`;
+    fetch(url)
+      .then((res) => res.json())
+      .then((data) => setData(data));
+  })
   
   const router =useRouter()
 
-    const usuarios:Data[] = [
-    { id: 1, fecha: "10-9-2025", vuelo:2, capacidad:500, vendido: 500 },
-      { id: 2,  fecha: "10-9-2024", vuelo:2, capacidad:500, vendido: 500},
-  ];
+  
    return (
       <div className="px-4 sm:px-6 lg:px-8 mt-20">
         <div className="mt-8 flow-root ">
@@ -66,12 +58,15 @@ export default function Table() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200">
-                  {usuarios.map((usuario) => (
-                    <tr key={usuario.id}>
-                      <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">{usuario.fecha}</td>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{usuario.vuelo}</td>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{usuario.capacidad}</td>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{usuario.vendido}</td>
+                  {data && 
+                  
+                  (
+                    data.map((usuario) => (
+                    <tr key={usuario.day}>
+                      <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">{usuario.day}</td>
+                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{usuario.flights}</td>
+                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{usuario.max_capacity}</td>
+                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{usuario.passengers}</td>
                       <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
                       {/* <Link href={`/admin/products/${product.id}/edit`} className="text-red-600 hover:text-red-800">Eliminar <span className="sr-only">, {product.name}</span> </Link> */}
                       <button
@@ -83,7 +78,10 @@ export default function Table() {
                 </button>
                       </td>
                     </tr>
-                  ))}
+                  ))
+
+
+                  )}
                 </tbody>
               </table>
             </div>
