@@ -5,19 +5,50 @@ import React, { useEffect, useState } from 'react'
 
 export default function Table() {
   const [data,setData]=useState<DataSet[]>()
+    const [day, setDay] = useState<string>('') // formato YYYY-MM-DD
+
+const fetchData = async (selectedDay?: string) => {
+    let url = `${process.env.NEXT_PUBLIC_URL}/api/date`;
+    if (selectedDay) {
+      const formattedDay = selectedDay.replaceAll('-', ''); // convierte YYYY-MM-DD a YYYYMMDD
+      url += `/${formattedDay}`;
+    }
+    console.log(url);
+    
+    const res = await fetch(url)
+    console.log(res);
+    
+    const json = await res.json()
+    console.log(json);
+    
+    setData(json)
+  }
 
   useEffect(()=>{
+
     const url = `${process.env.NEXT_PUBLIC_URL}/api/data`;
     fetch(url)
       .then((res) => res.json())
       .then((data) => setData(data));
-  })
+  },[])
   
   const router =useRouter()
-
-  
    return (
-      <div className="px-4 sm:px-6 lg:px-8 mt-20">
+          <div className="px-4 sm:px-6 lg:px-8 mt-8">
+      {/* Date picker para filtrar por día */}
+      <div className="mb-4">
+        <label className="block mb-2 text-sm font-medium text-gray-700">Filtrar por fecha</label>
+        <input
+          type="date"
+          className="border px-3 py-2 rounded"
+          value={day}
+          onChange={(e) => {
+            const selected = e.target.value // "YYYY-MM-DD"
+            setDay(selected)
+            fetchData(selected)
+          }}
+        />
+      </div>
         <div className="mt-8 flow-root ">
           <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8 bg-white p-5 ">

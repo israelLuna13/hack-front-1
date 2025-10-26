@@ -16,5 +16,12 @@ export const DataSetAPIResponseSchemaF = z.object({
     max_capacity: z.number()
 })
 
+export const DataSetAPIResponseSchema2 = z.object({
+    day: z.number(),
+    flights: z.number(),
+    
+})
+
 export type Data = z.infer<typeof DataSetAPIResponseSchema>
 export type DataSet = z.infer<typeof DataSetAPIResponseSchemaF>
+export type DataSet2 = z.infer<typeof DataSetAPIResponseSchema2>
