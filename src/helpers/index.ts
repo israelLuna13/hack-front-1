@@ -25,21 +25,39 @@ export function convertirTimestamp(timestamp:number) {
   });
 }
 
+// export function convertirFecha(fecha: string | number) {
+//   // Si es número, lo convertimos a string
+//   const fechaStr = String(fecha);
+
+//   // Asegurarnos de que tenga 8 dígitos
+//   if (!/^\d{8}$/.test(fechaStr)) return "Formato inválido";
+
+//   const year = fechaStr.substring(0, 4);
+//   const month = fechaStr.substring(4, 6);
+//   const day = fechaStr.substring(6, 8);
+
+//   // Crear el objeto Date
+//   const date = new Date(`${year}-${month}-${day}`);
+
+//   // Devolver formato legible
+//   return date.toLocaleDateString("es-MX", {
+//     year: "numeric",
+//     month: "long",
+//     day: "numeric",
+//   });
+// }
 export function convertirFecha(fecha: string | number) {
-  // Si es número, lo convertimos a string
   const fechaStr = String(fecha);
 
-  // Asegurarnos de que tenga 8 dígitos
   if (!/^\d{8}$/.test(fechaStr)) return "Formato inválido";
 
-  const year = fechaStr.substring(0, 4);
-  const month = fechaStr.substring(4, 6);
-  const day = fechaStr.substring(6, 8);
+  const year = parseInt(fechaStr.substring(0, 4));
+  const month = parseInt(fechaStr.substring(4, 6)) - 1; // Los meses en JS van de 0 a 11
+  const day = parseInt(fechaStr.substring(6, 8));
 
-  // Crear el objeto Date
-  const date = new Date(`${year}-${month}-${day}`);
+  // Crear fecha en horario local, sin UTC
+  const date = new Date(year, month, day);
 
-  // Devolver formato legible
   return date.toLocaleDateString("es-MX", {
     year: "numeric",
     month: "long",

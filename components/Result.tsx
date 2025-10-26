@@ -1,45 +1,54 @@
 "use client"
-import { useState } from "react"
+import { convertirFecha } from "@/src/helpers";
+import { DataSetPre } from "@/src/schemas";
+import { useEffect, useState } from "react"
 
 export default function Result({closeModal}:{closeModal:()=>void}) {
-  const [day, setDay] = useState<string>('');
-  const [day2, setDay2] = useState<string>('');
-  const [res, setRes] = useState<Array<any>>();
+  // const [day, setDay] = useState<string>('');
+  // const [day2, setDay2] = useState<string>('');
+  const [res, setRes] = useState<DataSetPre[]>();
 
-  const calcularFechaMax = (fecha: string) => {
-    if (!fecha) return "";
-    const base = new Date(fecha);
-    base.setDate(base.getDate() + 14);
-    return base.toISOString().split("T")[0];
-  };
+  // const calcularFechaMax = (fecha: string) => {
+  //   if (!fecha) return "";
+  //   const base = new Date(fecha);
+  //   base.setDate(base.getDate() + 14);
+  //   return base.toISOString().split("T")[0];
+  // };
 
-  const fetchData = async () => {
-    if(!day) return;
-    if(!day2) return;
-    console.log("dia " + day);
-    console.log("dia2 " + day2);
-    setRes([]);
+  // const fetchData = async () => {
+  //   if(!day) return;
+  //   if(!day2) return;
+  //   console.log("dia " + day);
+  //   console.log("dia2 " + day2);
+  //   setRes([]);
 
-    // let url = `${process.env.NEXT_PUBLIC_URL}/api/date`;
-    // if (day) {
-    //   const formattedDay = day.replaceAll('-', ''); // convierte YYYY-MM-DD a YYYYMMDD
-    //   url += `/${formattedDay}`;
-    // }
-    // console.log(url);
+  //   // let url = `${process.env.NEXT_PUBLIC_URL}/api/date`;
+  //   // if (day) {
+  //   //   const formattedDay = day.replaceAll('-', ''); // convierte YYYY-MM-DD a YYYYMMDD
+  //   //   url += `/${formattedDay}`;
+  //   // }
+  //   // console.log(url);
     
-    // const result = await fetch(url)
-    // console.log(res);
+  //   // const result = await fetch(url)
+  //   // console.log(res);
     
-    // const json = await res.json()
-    // console.log(json);
+  //   // const json = await res.json()
+  //   // console.log(json);
     
-    // setData(json)
-  }
+  //   // setData(json)
+  // }
 
+  useEffect(()=>{
+     const url = `${process.env.NEXT_PUBLIC_URL}/api/prediccion`;
+    fetch(url)
+      .then((res) => res.json())
+      .then((data) => setRes(data));
+
+  },[])
   return (
     <div className="flex flex-col text-center">
-      <h2 className="mb-10 text-xl">Seleccione las fechas a consultar</h2>
-      <div className="flex justify-evenly">
+      {/* <h2 className="mb-10 text-xl">Seleccione las fechas a consultar</h2> */}
+      {/* <div className="flex justify-evenly">
         <div className="mb-4">
             <label className="block mb-2 text-sm font-medium text-gray-700">Fecha inicial</label>
             <input
@@ -66,10 +75,10 @@ export default function Result({closeModal}:{closeModal:()=>void}) {
               }}
             />
         </div>
-      </div>
-      <div className="flex justify-center items-center">
+      </div> */}
+      {/* <div className="flex justify-center items-center">
       <button type="button" className="py-2 px-6 font-medium bg-gg-gold text-gg-gray rounded-md hover:border-gg-gold hover:border hover:bg-transparent hover:text-gg-gold" onClick={() => fetchData()}>Consultar</button>
-      </div>
+      </div> */}
 
       {/* Tabla resultados */}
       {res &&
@@ -84,25 +93,42 @@ export default function Result({closeModal}:{closeModal:()=>void}) {
                       scope="col"
                       className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0"
                     >
-                      Date
+                      Greatest_case
                     </th>
                     <th
                       scope="col"
                       className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                     >
-                      Vuelo
+                      Lowest_case
+                    </th>
+
+                    <th
+                      scope="col"
+                      className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                    >
+                      Prediction_date
+                    </th>
+
+                      <th
+                      scope="col"
+                      className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                    >
+                      Real_case
                     </th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200">
-                  {/* {res && (
+                  {res && (
                     res.map((usuario) => (
-                    <tr key={usuario.day}>
-                      <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">{usuario.day}</td>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{usuario.flights}</td>
+                    <tr key={usuario.greatest_case}>
+                      <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">{usuario.greatest_case}</td>
+                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{usuario.lowest_case}</td>
+                                            <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{convertirFecha(usuario.prediction_date)}</td>
+                                            <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{usuario.real_case}</td>
+
                     </tr>
                   ))
-                  )} */}
+                  )}
                 </tbody>
               </table>
             </div>
