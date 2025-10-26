@@ -1,6 +1,6 @@
 "use client"
 import {  DataSet } from '@/src/schemas';
-import { useRouter } from 'next/navigation';
+// import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 
 export default function Table() {
@@ -32,7 +32,7 @@ const fetchData = async (selectedDay?: string) => {
       .then((data) => setData(data));
   },[])
   
-  const router =useRouter()
+  //const router =useRouter()
    return (
           <div className="px-4 sm:px-6 lg:px-8 mt-8">
       {/* Date picker para filtrar por día */}
@@ -98,16 +98,16 @@ const fetchData = async (selectedDay?: string) => {
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{usuario.flights}</td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{usuario.max_capacity}</td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{usuario.passengers}</td>
-                      <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0">
+                      {/* <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0"> */}
                       {/* <Link href={`/admin/products/${product.id}/edit`} className="text-red-600 hover:text-red-800">Eliminar <span className="sr-only">, {product.name}</span> </Link> */}
-                      <button
+                      {/* <button
                 type='button'
                 className='block px-3 py-1 text-sm leading-6 text-gg-gold hover:underline'
                 onClick={ () => router.push(`?prevView=true&showModal=true`)}
               >
                 view
                 </button>
-                      </td>
+                      </td> */}
                     </tr>
                   ))
 

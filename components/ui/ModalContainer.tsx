@@ -9,8 +9,8 @@ import Result2 from '../Result2';
 
 //componentes name to render
 const componentsMap={
-    "PrevView":Result,
-    "PrevView2":Result2
+    "PrevViewA":Result,
+    "PrevViewB":Result2
 }
 
 export default function ModalContainer() {
@@ -19,14 +19,14 @@ export default function ModalContainer() {
   const searchParams = useSearchParams()// to get params
   //to get params from url
   const showModal=searchParams.get('showModal')
-  const prevView = searchParams.get("prevView");
-  const prevView2 = searchParams.get("prevView2");
+  const prevView = searchParams.get("prevViewA");
+  const prevView2 = searchParams.get("prevViewB");
 //   const editExpenseId = searchParams.get("editExpenseId");
 //   const deleteExpenseId = searchParams.get("deleteExpenseId");
 
   const getComponentName = () => {
-    if (prevView) return "PrevView";
-    if (prevView2) return "PrevView2";
+    if (prevView) return "PrevViewA";
+    if (prevView2) return "PrevViewB";
     
   };
   const componentName =getComponentName()
