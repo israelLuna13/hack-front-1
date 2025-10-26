@@ -2,7 +2,7 @@
 
 
 //this function will to execute when the user visit this url admin/api/budgets/id/expenses/id
-export async function GET(request:Request){
+export async function GET(){
     // await verifySession()
     // const token = getToken()
     const url = `${process.env.API_URL}/api/plant1`

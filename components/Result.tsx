@@ -44,7 +44,7 @@ export default function Result({closeModal}:{closeModal:()=>void}) {
       .then((res) => res.json())
       .then((data) => setRes(data));
 
-  },[])
+  },[closeModal])
   return (
     <div className="flex flex-col text-center">
       {/* <h2 className="mb-10 text-xl">Seleccione las fechas a consultar</h2> */}

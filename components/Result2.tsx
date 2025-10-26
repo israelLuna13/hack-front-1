@@ -1,75 +1,45 @@
-import { useState } from "react";
+import { DataSet2 } from "@/src/schemas";
+import { useEffect, useState } from "react";
 
 export default function Result2({closeModal}:{closeModal:()=>void}) {
-  const [day, setDay] = useState<string>('');
-    const [day2, setDay2] = useState<string>('');
-    const [res, setRes] = useState<Array<any>>();
+  // const [day, setDay] = useState<string>('');
+  //   const [day2, setDay2] = useState<string>('');
+    const [res, setRes] = useState<DataSet2>();
   
-    const calcularFechaMax = (fecha: string) => {
-      if (!fecha) return "";
-      const base = new Date(fecha);
-      base.setDate(base.getDate() + 14);
-      return base.toISOString().split("T")[0];
-    };
+
+   useEffect(()=>{
+       const url = `${process.env.NEXT_PUBLIC_URL}/api/prediccion`;
+      fetch(url)
+        .then((res) => res.json())
+        .then((data) => setRes(data));
   
-    const fetchData = async () => {
-      if(!day) return;
-      if(!day2) return;
-      console.log("dia " + day);
-      console.log("dia2 " + day2);
-      setRes([]);
-      // Hacer consulta para el result2
-      // let url = `${process.env.NEXT_PUBLIC_URL}/api/date`;
-      // if (day) {
-      //   const formattedDay = day.replaceAll('-', ''); // convierte YYYY-MM-DD a YYYYMMDD
-      //   url += `/${formattedDay}`;
-      // }
-      // console.log(url);
+    },[closeModal])
+    // const fetchData = async () => {
+    //   if(!day) return;
+    //   if(!day2) return;
+    //   console.log("dia " + day);
+    //   console.log("dia2 " + day2);
+    //   setRes([]);
+    //   // Hacer consulta para el result2
+    //   // let url = `${process.env.NEXT_PUBLIC_URL}/api/date`;
+    //   // if (day) {
+    //   //   const formattedDay = day.replaceAll('-', ''); // convierte YYYY-MM-DD a YYYYMMDD
+    //   //   url += `/${formattedDay}`;
+    //   // }
+    //   // console.log(url);
       
-      // const result = await fetch(url)
-      // console.log(res);
+    //   // const result = await fetch(url)
+    //   // console.log(res);
       
-      // const json = await res.json()
-      // console.log(json);
+    //   // const json = await res.json()
+    //   // console.log(json);
       
-      // setData(json)
-    }
+    //   // setData(json)
+    // }
   
     return (
-      <div className="flex flex-col text-center">
-        <h2 className="mb-10 text-xl">Seleccione las fechas a consultar</h2>
-        <div className="flex justify-evenly">
-          <div className="mb-4">
-              <label className="block mb-2 text-sm font-medium text-gray-700">Fecha inicial</label>
-              <input
-                type="date"
-                className="border px-3 py-2 rounded"
-                value={day}
-                onChange={(e) => {
-                  const selected = e.target.value // "YYYY-MM-DD"
-                  setDay(selected)
-                }}
-              />
-          </div>
-          <div className="mb-4">
-              <label className="block mb-2 text-sm font-medium text-gray-700">Fecha de cierre</label>
-              <input
-                type="date"
-                min={day}
-                max={calcularFechaMax(day)}
-                className="border px-3 py-2 rounded"
-                value={day2}
-                onChange={(e) => {
-                  const selected2 = e.target.value // "YYYY-MM-DD"
-                  setDay2(selected2)
-                }}
-              />
-          </div>
-        </div>
-        <div className="flex justify-center items-center">
-        <button type="button" className="py-2 px-6 font-medium bg-gg-gold text-gg-gray rounded-md hover:border-gg-gold hover:border hover:bg-transparent hover:text-gg-gold" onClick={() => fetchData()}>Consultar</button>
-        </div>
-  
+       <div className="flex flex-col text-center">
+    
         {/* Tabla resultados */}
         {res &&
         <div className="px-4 sm:px-6 lg:px-8">

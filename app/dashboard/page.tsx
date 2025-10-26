@@ -14,7 +14,7 @@ export default function DashboardPage() {
     <>
       <div className="w-full max-w-6xl mx-auto animate-fade-in ">
         <h2 className="text-4xl md:text-5xl font-bold mb-10 bg-gradient-to-r from-gg-blue to-gg-dark-gold bg-clip-text text-transparent text-center">
-          Sistema de Gestión de Vuelos
+          Sistema De Gestion De Pasajeros
         </h2>
         <div className="flex justify-center mb-8">
           <div className="grid w-full max-w-md grid-cols-2 border border-gray-300 bg-gray-50 rounded-xl shadow-sm overflow-hidden">

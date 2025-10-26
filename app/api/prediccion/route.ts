@@ -1,6 +1,6 @@
 "use server"
 //this function will to execute when the user visit this url admin/api/budgets/id/expenses/id
-export async function GET(request:Request,{params}:{params:{day:string}}){
+export async function GET(){
     // await verifySession()
     // const token = getToken()
     
