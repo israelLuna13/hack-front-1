@@ -1,4 +1,5 @@
 "use client"
+import { convertirFecha } from '@/src/helpers';
 import {  DataSet } from '@/src/schemas';
 // import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
@@ -94,7 +95,7 @@ const fetchData = async (selectedDay?: string) => {
                   (
                     data.map((usuario) => (
                     <tr key={usuario.day}>
-                      <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">{usuario.day}</td>
+                      <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">{convertirFecha(usuario.day)}</td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{usuario.flights}</td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{usuario.max_capacity}</td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{usuario.passengers}</td>

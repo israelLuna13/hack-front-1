@@ -1,10 +1,33 @@
 "use client"
+import { convertirTimestamp } from '@/src/helpers';
 import { DataSet2 } from '@/src/schemas';
 // import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 
 export default function Table2() {
  const [data,setData]=useState<DataSet2[]>()
+ const [day, setDay] = useState<string>('') // formato YYYY-MM-DD
+
+ const fetchData = async (selectedDay?: string) => {
+    let url = `${process.env.NEXT_PUBLIC_URL}/api/date2`;
+    if (selectedDay) {
+      // convertir a timestamp en milisegundos
+    const date = new Date(selectedDay);
+    // pasar a nanosegundos
+    const timestampNs = date.getTime() * 1_000_000;
+      url += `/${timestampNs}`;
+    }
+    console.log(url);
+    
+    const res = await fetch(url)
+    console.log(res);
+    
+    const json = await res.json()
+    console.log(json);
+    
+    setData(json)
+  }
+ 
   useEffect(()=>{
     const url = `${process.env.NEXT_PUBLIC_URL}/api/data2`;
     fetch(url)
@@ -15,7 +38,21 @@ export default function Table2() {
   //const router =useRouter()
 
    return (
-      <div className="px-4 sm:px-6 lg:px-8">
+       <div className="px-4 sm:px-6 lg:px-8 mt-8">
+      {/* Date picker para filtrar por día */}
+      <div className="mb-4">
+        <label className="block mb-2 text-sm font-medium text-gray-700">Filtrar por fecha</label>
+        <input
+          type="date"
+          className="border px-3 py-2 rounded"
+          value={day}
+          onChange={(e) => {
+            const selected = e.target.value // "YYYY-MM-DD"
+            setDay(selected)
+            fetchData(selected)
+          }}
+        />
+      </div>
         <div className="mt-8 flow-root ">
           <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8 bg-white p-5 ">
@@ -47,7 +84,7 @@ export default function Table2() {
                   {data && (
                     data.map((usuario) => (
                     <tr key={usuario.day}>
-                      <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">{usuario.day}</td>
+                      <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">{convertirTimestamp(usuario.day)}</td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{usuario.flights}</td>
                       {/* <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-0"> */}
                       {/* <Link href={`/admin/products/${product.id}/edit`} className="text-red-600 hover:text-red-800">Eliminar <span className="sr-only">, {product.name}</span> </Link> */}
